@@ -7,13 +7,14 @@
 
 namespace Drupal\Tests\views_tree\Unit;
 
+use Drupal\Tests\UnitTestCase;
 use Drupal\views_tree\TreeItem;
 
 /**
  * @coversDefaultClass \Drupal\views_tree\TreeItem
  * @group views_tree
  */
-class TreeItemTest extends \PHPUnit_Framework_TestCase {
+class TreeItemTest extends UnitTestCase {
 
   public function testIterator() {
     $tree = new TreeItem(NULL);

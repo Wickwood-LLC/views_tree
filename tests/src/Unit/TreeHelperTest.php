@@ -7,6 +7,7 @@
 
 namespace Drupal\Tests\views_tree\Unit;
 
+use Drupal\Tests\UnitTestCase;
 use Drupal\views\ResultRow;
 use Drupal\views_tree\Plugin\views\style\Tree;
 use Drupal\views_tree\TreeItem;
@@ -16,7 +17,7 @@ use Drupal\views_tree\TreeHelper;
  * @coversDefaultClass \Drupal\views_tree\TreeHelper
  * @group views_tree
  */
-class TreeHelperTest extends \PHPUnit_Framework_TestCase {
+class TreeHelperTest extends UnitTestCase {
 
   /**
    * @covers ::getTreeFromResult
