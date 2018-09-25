@@ -10,7 +10,7 @@
         var views_tree_name = views_tree_settings[views_tree_settings_id][0];
 
         $.each( $(".view-id-" + views_tree_name + " .view-content li"), function () {
-          var count = $(this).find("li").size();
+          var count = $(this).find("li").length;
           if (count > 0) {
             $(this).addClass('views_tree_parent');
             $(this).children('ul').addClass("item-list");
