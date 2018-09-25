@@ -100,20 +100,7 @@ class ViewsResultTreeValues {
    */
   protected function normalizeKey($value, FieldPluginBase $field) {
     if (is_array($value) && count($value)) {
-      // @todo convert this part to Drupal 8.
-      if (isset($field->field_info['columns'])) {
-        $columns = array_keys($field->field_info['columns']);
-        foreach ($columns as $column) {
-          if (in_array($column, ['target_id', 'nid', 'uid', 'tid'])) {
-            $field_property = $column;
-            break;
-          }
-        }
-      }
-      else {
-        $field_property = '';
-      }
-      return $field_property ? $value[0][$field_property] : 0;
+      return reset($value);
     }
     else {
       return $value ? $value : 0;
