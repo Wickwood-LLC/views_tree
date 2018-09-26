@@ -1,0 +1,18 @@
+# Schema for the Views Tree module.
+
+views.style.tree:
+  type: views_style
+  label: 'Views Tree'
+  mapping:
+    type:
+      type: string
+      label: 'List type'
+    main_field:
+      type: string
+      label: 'Main field'
+    parent_field:
+      type: string
+      label: 'Parent field'
+    collapsible_tree:
+      type: string
+      label: 'Collapsible list'
