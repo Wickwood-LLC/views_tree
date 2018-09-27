@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\views_tree\Unit\TreeItemTest.
- */
-
 namespace Drupal\Tests\views_tree\Unit;
 
 use Drupal\Tests\UnitTestCase;
@@ -16,6 +11,9 @@ use Drupal\views_tree\TreeItem;
  */
 class TreeItemTest extends UnitTestCase {
 
+  /**
+   * @covers ::getIterator
+   */
   public function testIterator() {
     $tree = new TreeItem(NULL);
     $tree

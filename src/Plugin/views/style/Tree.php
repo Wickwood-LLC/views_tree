@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\views_tree\Plugin\views\style\TreeHelper.
- */
-
 namespace Drupal\views_tree\Plugin\views\style;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -67,7 +62,7 @@ class Tree extends HtmlList {
       $fields[$field] = $handler->adminLabel();
     }
 
-    $events = ['click' => t('On Click'), 'mouseover' => t('On Mouseover')];
+    $events = ['click' => $this->t('On Click'), 'mouseover' => $this->t('On Mouseover')];
 
     $form['type']['#description'] = t('Whether to use an ordered or unordered list for the retrieved items. Most use cases will prefer Unordered.');
 
@@ -77,10 +72,10 @@ class Tree extends HtmlList {
 
     $form['main_field'] = [
       '#type' => 'select',
-      '#title' => t('Main field'),
+      '#title' => $this->t('Main field'),
       '#options' => $fields,
       '#default_value' => $this->options['main_field'],
-      '#description' => t('Select the field with the unique identifier for each record.'),
+      '#description' => $this->t('Select the field with the unique identifier for each record.'),
       '#required' => TRUE,
     ];
 
@@ -89,17 +84,17 @@ class Tree extends HtmlList {
       '#title' => t('Parent field'),
       '#options' => $fields,
       '#default_value' => $this->options['parent_field'],
-      '#description' => t('Select the field that contains the unique identifier of the record\'s parent.'),
+      '#description' => $this->t("Select the field that contains the unique identifier of the record's parent."),
     ];
 
     $form['collapsible_tree'] = [
       '#type' => 'radios',
-      '#title' => t('Collapsible view'),
+      '#title' => $this->t('Collapsible view'),
       '#default_value' => $this->options['collapsible_tree'],
       '#options' => [
-        0 => t('Off'),
-        'expanded' => t('Expanded'),
-        'collapsed' => t('Collapsed'),
+        0 => $this->t('Off'),
+        'expanded' => $this->t('Expanded'),
+        'collapsed' => $this->t('Collapsed'),
       ],
     ];
   }

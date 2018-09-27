@@ -25,15 +25,39 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class TreeViewsSelection extends ViewsSelection {
 
   /**
+   * The tree helper.
+   *
    * @var \Drupal\views_tree\TreeHelper
    */
   protected $tree;
 
   /**
+   * The views result tree values.
+   *
    * @var \Drupal\views_tree\ViewsResultTreeValues
    */
   protected $viewsResultTreeValues;
 
+  /**
+   * Constructs the ER views selection plugin.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   *   The entity manager service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler service.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
+   * @param \Drupal\views_tree\TreeHelper $tree
+   *   The tree helper.
+   * @param \Drupal\views_tree\ViewsResultTreeValues $views_result_tree_values
+   *   The views result tree values service.
+   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityManagerInterface $entity_manager, ModuleHandlerInterface $module_handler, AccountInterface $current_user, TreeHelper $tree, ViewsResultTreeValues $views_result_tree_values) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_manager, $module_handler, $current_user);
 
@@ -57,7 +81,6 @@ class TreeViewsSelection extends ViewsSelection {
     );
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -70,7 +93,6 @@ class TreeViewsSelection extends ViewsSelection {
       // Get the results.
       $result = $this->view->executeDisplay($display_name, $arguments);
     }
-
 
     $this->applyTreeOnResult($this->view, $this->view->result);
     $tree = $this->tree->getTreeFromResult($this->view->result);
@@ -88,10 +110,12 @@ class TreeViewsSelection extends ViewsSelection {
   }
 
   /**
-   * @param \Drupal\views\ViewExecutable $view
-   * @param \Drupal\views\ResultRow[] $result
+   * Applies a tree to a result set.
    *
-   * @return string
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view.
+   * @param \Drupal\views\ResultRow[] $result
+   *   The result set.
    */
   protected function applyTreeOnResult(ViewExecutable $view, array $result) {
     $this->viewsResultTreeValues->setTreeValues($view, $result);

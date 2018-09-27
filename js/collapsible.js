@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 (function ($, Drupal) {
 
   'use strict';
@@ -6,10 +10,10 @@
     attach: function (context, settings) {
 
       var views_tree_settings = settings.views_tree_settings;
-      for(var views_tree_settings_id in views_tree_settings) {
+      for (var views_tree_settings_id in views_tree_settings) {
         var views_tree_name = views_tree_settings[views_tree_settings_id][0];
 
-        $.each( $(".view-id-" + views_tree_name + " .view-content li"), function () {
+        $.each($(".view-id-" + views_tree_name + " .view-content li"), function () {
           var count = $(this).find("li").length;
           if (count > 0) {
             $(this).addClass('views_tree_parent');

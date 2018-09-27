@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\views_tree\Plugin\views\style\TreeERSelection.
- */
-
 namespace Drupal\views_tree\Plugin\views\style;
 
 use Drupal\Component\Utility\Xss;
@@ -70,7 +65,7 @@ class TreeERSelection extends Tree {
 
     // @todo We don't display grouping info for now. Could be useful for select
     // widget, though.
-    $results = array();
+    $results = [];
     foreach ($sets as $records) {
       foreach ($records as $values) {
         $results[$values->{$id_field_alias}] = $this->view->rowPlugin->render($values);

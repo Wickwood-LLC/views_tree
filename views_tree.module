@@ -4,6 +4,7 @@
  * @file
  * Views tree module.
  */
+
 use Drupal\views\ResultRow;
 
 /**
@@ -25,7 +26,13 @@ function views_tree_theme($existing, $type, $theme, $path) {
   ];
 }
 
-function template_preprocess_views_tree(&$vars) {
+/**
+ * Prepares variables for a views tree display.
+ *
+ * @param array $vars
+ *   The variables to pass on to the template.
+ */
+function template_preprocess_views_tree(array &$vars) {
   $rows = $vars['rows'];
   /** @var \Drupal\views\ViewExecutable $view */
   $view = $vars['view'];
@@ -39,7 +46,8 @@ function template_preprocess_views_tree(&$vars) {
         $view->id(),
         $options['collapsible_tree'],
       ],
-    ]];
+      ],
+    ];
   }
 
   /** @var \Drupal\views_tree\ViewsResultTreeValues $tree_values */
@@ -59,4 +67,3 @@ function template_preprocess_views_tree(&$vars) {
   $vars['list_type'] = $options['type'];
   $vars['items'] = $render_tree;
 }
-

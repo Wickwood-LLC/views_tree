@@ -1,12 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\views_tree\TreeHelper.
- */
-
 namespace Drupal\views_tree;
 
+/**
+ * The tree helper service.
+ */
 class TreeHelper {
 
   /**
@@ -23,6 +21,17 @@ class TreeHelper {
     return $this->getTreeFromGroups($groups);
   }
 
+  /**
+   * Get a tree from given groups.
+   *
+   * @param array $groups
+   *   The groups.
+   * @param string $current_group
+   *   The current group.
+   *
+   * @return \Drupal\views_tree\TreeItem
+   *   The tree for the given groups.
+   */
   protected function getTreeFromGroups(array $groups, $current_group = '0') {
     $return = new TreeItem(NULL);
 
@@ -38,6 +47,15 @@ class TreeHelper {
     return $return;
   }
 
+  /**
+   * Groups results by parent.
+   *
+   * @param array $result
+   *   The result set.
+   *
+   * @return array
+   *   Result grouped by parent.
+   */
   protected function groupResultByParent(array $result) {
     $return = [];
 
@@ -47,6 +65,17 @@ class TreeHelper {
     return $return;
   }
 
+  /**
+   * Applies a given callable to each row and leaf.
+   *
+   * @param \Drupal\views_tree\TreeItem $tree
+   *   The tree item.
+   * @param callable $callable
+   *   The callable.
+   *
+   * @return \Drupal\views_tree\TreeItem
+   *   The new tree item.
+   */
   public function applyFunctionToTree(TreeItem $tree, callable $callable) {
     if (($node = $tree->getNode()) && $node !== NULL) {
       $new_node = $callable($tree->getNode());

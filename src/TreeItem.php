@@ -1,28 +1,37 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\views_tree\TreeItem.
- */
-
 namespace Drupal\views_tree;
 
-use Traversable;
-
+/**
+ * Defines a tree item class.
+ */
 class TreeItem implements \IteratorAggregate {
 
+  /**
+   * The main node in the tree.
+   *
+   * @var mixed
+   *
+   * Typically an instance of Drupal\views\ResultRow.
+   *
+   * @todo Is it always a result row?
+   */
   protected $node;
 
   /**
-   * @var \Drupal\views_tree\TreeItem
+   * Leaves of the main node.
+   *
+   * @var \Drupal\views_tree\TreeItem[]
    */
   protected $leaves = [];
 
   /**
    * Creates a new TreeItem instance.
    *
-   * @param $node
+   * @param mixed $node
+   *   The main tree node to set.
    * @param array $leaves
+   *   An optional array of leaves to set.
    */
   public function __construct($node, array $leaves = []) {
     $this->setNode($node);
@@ -30,21 +39,30 @@ class TreeItem implements \IteratorAggregate {
   }
 
   /**
+   * Get the tree node.
+   *
    * @return mixed
+   *   The tree node.
    */
   public function getNode() {
     return $this->node;
   }
 
   /**
+   * Sets the node.
+   *
    * @param mixed $node
+   *   The node to set.
    */
   public function setNode($node) {
     $this->node = $node;
   }
 
   /**
-   * @return array
+   * Get the leaves.
+   *
+   * @return \Drupal\views_tree\TreeItem[]
+   *   An array of tree item leaves.
    */
   public function getLeaves() {
     return $this->leaves;
@@ -58,9 +76,14 @@ class TreeItem implements \IteratorAggregate {
   }
 
   /**
+   * Sets the leaves.
+   *
    * @param array $leaves
+   *   An array of leaves. If they are not already an instance of
+   *   \Drupal\views_tree\TreeItem, each one will be converted.
    *
    * @return $this
+   *   The instance of the TreeItem.
    */
   public function setLeaves(array $leaves) {
     foreach ($leaves as &$leave) {
@@ -73,7 +96,11 @@ class TreeItem implements \IteratorAggregate {
   }
 
   /**
-   * @param $item
+   * Adds a leaf.
+   *
+   * @param mixed $item
+   *   An item to add. If not an instance of \Drupal\views_tree\TreeItem it will
+   *   be converted.
    *
    * @return $this
    */

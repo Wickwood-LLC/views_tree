@@ -1,15 +1,9 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\views_tree\Unit\TreeHelperTest.
- */
-
 namespace Drupal\Tests\views_tree\Unit;
 
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\ResultRow;
-use Drupal\views_tree\Plugin\views\style\Tree;
 use Drupal\views_tree\TreeItem;
 use Drupal\views_tree\TreeHelper;
 
@@ -139,7 +133,9 @@ class TreeHelperTest extends UnitTestCase {
     );
 
     $tree_helper = new TreeHelper();
-    $result = $tree_helper->applyFunctionToTree($tree, function ($i) { return $i + 1; });
+    $result = $tree_helper->applyFunctionToTree($tree, function ($i) {
+      return $i + 1;
+    });
     $this->assertEquals($expected_tree, $result);
   }
 
@@ -160,7 +156,9 @@ class TreeHelperTest extends UnitTestCase {
     );
 
     $tree_helper = new TreeHelper();
-    $result = $tree_helper->applyFunctionToTree($tree, function ($i) { return $i + 1; });
+    $result = $tree_helper->applyFunctionToTree($tree, function ($i) {
+      return $i + 1;
+    });
     $this->assertEquals($expected_tree, $result);
   }
 
