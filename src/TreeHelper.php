@@ -2,10 +2,57 @@
 
 namespace Drupal\views_tree;
 
+use Drupal\Core\Template\Attribute;
+use Drupal\views\ResultRow;
+use Drupal\views\ViewExecutable;
+
 /**
  * The tree helper service.
  */
 class TreeHelper {
+
+  /**
+   * The tree values service.
+   *
+   * @var \Drupal\views_tree\ViewsResultTreeValues
+   */
+  protected $treeValues;
+
+  /**
+   * Constructs the tree helper.
+   *
+   * @param \Drupal\views_tree\ViewsResultTreeValues $tree_values
+   *   The tree values service.
+   */
+  public function __construct(ViewsResultTreeValues $tree_values) {
+    $this->treeValues = $tree_values;
+  }
+
+  /**
+   * Builds a render tree from an executed view.
+   */
+  public function buildRenderTree(ViewExecutable $view, array $rows) {
+    $result = $view->result;
+    $this->treeValues->setTreeValues($view, $result);
+    $result_tree = $this->getTreeFromResult($result);
+    return $this->applyFunctionToTree($result_tree, function (ResultRow $row) use ($rows) {
+      return $rows[$row->index];
+    });
+  }
+
+  /**
+   * Adds hierarchical data attributes to the tree data.
+   */
+  public function addDataAttributes(TreeItem $tree, $nesting = 0) {
+    $node = $tree->getNode();
+    if (isset($node['attributes']) && $node['attributes'] instanceof Attribute) {
+      $node['attributes']->setAttribute('data-hierarchy-level', $nesting);
+    }
+    $nesting++;
+    foreach ($tree->getLeaves() as $leaf) {
+      $this->addDataAttributes($leaf, $nesting);
+    }
+  }
 
   /**
    * Builds a tree from a views result.

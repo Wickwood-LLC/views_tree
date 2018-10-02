@@ -4,6 +4,7 @@ namespace Drupal\views_tree\Plugin\views\style;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\style\HtmlList;
+use Drupal\views_tree\TreeStyleTrait;
 
 /**
  * Style plugin to render each item as hierarchy.
@@ -12,13 +13,15 @@ use Drupal\views\Plugin\views\style\HtmlList;
  *
  * @ViewsStyle(
  *   id = "tree",
- *   title = @Translation("TreeHelper (Adjacency model)"),
+ *   title = @Translation("Tree (list)"),
  *   help = @Translation("Display the results as a nested tree"),
  *   theme = "views_tree",
  *   display_types = {"normal"}
  * )
  */
 class Tree extends HtmlList {
+
+  use TreeStyleTrait;
 
   /**
    * {@inheritdoc}
@@ -41,10 +44,10 @@ class Tree extends HtmlList {
   protected function defineOptions() {
     $options = parent::defineOptions();
 
+    $this->defineCommonOptions($options);
+
     $options['class'] = ['default' => ''];
     $options['wrapper_class'] = ['default' => 'item-list'];
-    $options['main_field'] = ['default' => ''];
-    $options['parent_field'] = ['default' => ''];
     $options['collapsible_tree'] = ['default' => 0];
 
     return $options;
@@ -56,36 +59,15 @@ class Tree extends HtmlList {
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
-    $fields = ['' => t('<None>')];
-
-    foreach ($this->displayHandler->getHandlers('field') as $field => $handler) {
-      $fields[$field] = $handler->adminLabel();
-    }
+    $this->getCommonOptionsForm($form, $form_state);
 
     $events = ['click' => $this->t('On Click'), 'mouseover' => $this->t('On Mouseover')];
 
-    $form['type']['#description'] = t('Whether to use an ordered or unordered list for the retrieved items. Most use cases will prefer Unordered.');
+    $form['type']['#description'] = $this->t('Whether to use an ordered or unordered list for the retrieved items. Most use cases will prefer Unordered.');
 
-    // Unused by the views tree module at this time.
+    // Unused by the views tree list style at this time.
     unset($form['wrapper_class']);
     unset($form['class']);
-
-    $form['main_field'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Main field'),
-      '#options' => $fields,
-      '#default_value' => $this->options['main_field'],
-      '#description' => $this->t('Select the field with the unique identifier for each record.'),
-      '#required' => TRUE,
-    ];
-
-    $form['parent_field'] = [
-      '#type' => 'select',
-      '#title' => t('Parent field'),
-      '#options' => $fields,
-      '#default_value' => $this->options['parent_field'],
-      '#description' => $this->t("Select the field that contains the unique identifier of the record's parent."),
-    ];
 
     $form['collapsible_tree'] = [
       '#type' => 'radios',

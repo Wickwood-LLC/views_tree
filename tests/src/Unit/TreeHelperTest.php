@@ -6,6 +6,7 @@ use Drupal\Tests\UnitTestCase;
 use Drupal\views\ResultRow;
 use Drupal\views_tree\TreeItem;
 use Drupal\views_tree\TreeHelper;
+use Drupal\views_tree\ViewsResultTreeValues;
 
 /**
  * @coversDefaultClass \Drupal\views_tree\TreeHelper
@@ -14,10 +15,27 @@ use Drupal\views_tree\TreeHelper;
 class TreeHelperTest extends UnitTestCase {
 
   /**
+   * Mocked views tree result.
+   *
+   * @var \Drupal\views_tree\ViewsResultTreeValues
+   */
+  protected $viewsResultTree;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp();
+
+    $views_result_tree = $this->prophesize(ViewsResultTreeValues::class);
+    $this->viewsResultTree = $views_result_tree->reveal();
+  }
+
+  /**
    * @covers ::getTreeFromResult
    */
   public function testGetTreeFromResultFromEmptyResult() {
-    $tree_helper = new TreeHelper();
+    $tree_helper = new TreeHelper($this->viewsResultTree);
     $this->assertEquals(new TreeItem(NULL, []), $tree_helper->getTreeFromResult([]));
   }
 
@@ -25,7 +43,7 @@ class TreeHelperTest extends UnitTestCase {
    * @covers ::getTreeFromResult
    */
   public function testGetTreeFromResultWithNoHierarchy() {
-    $tree_helper = new TreeHelper();
+    $tree_helper = new TreeHelper($this->viewsResultTree);
     $tree_data = [];
     $tree_data[] = new ResultRow([
       'views_tree_main' => 1,
@@ -49,7 +67,7 @@ class TreeHelperTest extends UnitTestCase {
    * @covers ::getTreeFromResult
    */
   public function testGetTreeFromResultWithOneLevelHierarchy() {
-    $tree_helper = new TreeHelper();
+    $tree_helper = new TreeHelper($this->viewsResultTree);
     $tree_data = [];
     $tree_data[] = new ResultRow([
       'views_tree_main' => 1,
@@ -77,7 +95,7 @@ class TreeHelperTest extends UnitTestCase {
    * @covers ::getTreeFromResult
    */
   public function testGetTreeFromResultWithMultipleLevelHierarchy() {
-    $tree_helper = new TreeHelper();
+    $tree_helper = new TreeHelper($this->viewsResultTree);
     $tree_data = [];
     $tree_data[] = new ResultRow([
       'views_tree_main' => 1,
@@ -132,7 +150,7 @@ class TreeHelperTest extends UnitTestCase {
       ->addLeave(4.5)
     );
 
-    $tree_helper = new TreeHelper();
+    $tree_helper = new TreeHelper($this->viewsResultTree);
     $result = $tree_helper->applyFunctionToTree($tree, function ($i) {
       return $i + 1;
     });
@@ -155,7 +173,7 @@ class TreeHelperTest extends UnitTestCase {
       ->addLeave(4.5)
     );
 
-    $tree_helper = new TreeHelper();
+    $tree_helper = new TreeHelper($this->viewsResultTree);
     $result = $tree_helper->applyFunctionToTree($tree, function ($i) {
       return $i + 1;
     });

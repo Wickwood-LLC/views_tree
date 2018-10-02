@@ -8,3 +8,9 @@ views_tree:
   dependencies:
     - core/drupal
     - core/drupalSettings
+
+views_tree_table:
+  version: VERSION
+  css:
+    layout:
+      css/table.css: {}

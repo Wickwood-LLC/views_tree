@@ -41,7 +41,7 @@
         <li{{ item.attributes }}>{{ item.node }} {{ views_tree.tree(item.leaves, attributes, list_type) }}</li>
       {%- endfor -%}
       </{{ list_type }}>
-      {%- else -%}
+    {%- else -%}
         {{- empty -}}
     {%- endif -%}
   {%- endif %}

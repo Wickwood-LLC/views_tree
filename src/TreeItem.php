@@ -11,10 +11,6 @@ class TreeItem implements \IteratorAggregate {
    * The main node in the tree.
    *
    * @var mixed
-   *
-   * Typically an instance of Drupal\views\ResultRow.
-   *
-   * @todo Is it always a result row?
    */
   protected $node;
 
